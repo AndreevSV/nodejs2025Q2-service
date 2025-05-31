@@ -7,6 +7,6 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(5)
+  @MinLength(6)
   password: string;
 }

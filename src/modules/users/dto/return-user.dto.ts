@@ -1,3 +1,4 @@
-import { User } from '../entities/user.entity';
+import { OmitType } from '@nestjs/mapped-types';
+import { BaseUserDto } from './base-user.dto';
 
-export type ReturnUserDto = Omit<User, 'password'>;
+export class ReturnUserDto extends OmitType(BaseUserDto, ['password']) {}
