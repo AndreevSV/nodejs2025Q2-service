@@ -3,11 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ValidationPipe,
   ParseUUIDPipe,
+  Put,
+  HttpCode,
 } from '@nestjs/common';
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -32,7 +33,7 @@ export class TracksController {
     return this.tracksService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updateTrackDto: UpdateTrackDto,
@@ -43,6 +44,7 @@ export class TracksController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.tracksService.remove(id);
   }
