@@ -1,72 +1,77 @@
 # Home Library Service
 
+## Overview
+
+REST API service for managing a home music library (tracks, albums, artists and favorites).
+
 ## Prerequisites
 
-- Git - [Download & Install Git](https://git-scm.com/downloads).
-- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-## Downloading
+## Getting Started
 
-```
-git clone {repository URL}
-```
+### Installation
 
-## Installing NPM modules
+```bash
+# Clone repository
+git clone
 
-```
+# Install dependencies
 npm install
 ```
 
-## Running application
+### Running the App
 
+```bash
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
 ```
-npm start
-```
 
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
+### Testing
 
-## Testing
-
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
-```
+```bash
+# Run tests
 npm run test
-```
 
-To run only one of all test suites
-
-```
-npm run test -- <path to suite>
-```
-
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization
-
-```
-npm run test:auth -- <path to suite>
-```
-
-### Auto-fix and format
-
-```
+# Run linting
 npm run lint
 ```
 
-```
-npm run format
-```
+## API Endpoints
 
-### Debugging in VSCode
+### Users
 
-Press <kbd>F5</kbd> to debug.
+- `POST /user` - Create user
+- `GET /user` - Get all users
+- `GET /user/:id` - Get user by ID
+- `PATCH /user/:id` - Update user password
+- `DELETE /user/:id` - Delete user
 
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+### Tracks, Albums, Artists
+
+Standard CRUD operations:
+
+- `POST /{entity}` - Create
+- `GET /{entity}` - Get all
+- `GET /{entity}/:id` - Get by ID
+- `PUT /{entity}/:id` - Update
+- `DELETE /{entity}/:id` - Delete
+
+Where `{entity}` is one of: `track`, `album`, `artist`
+
+### Favorites
+
+- `GET /favs` - Get all favorites
+- `POST /favs/{entity}/:id` - Add to favorites
+- `DELETE /favs/{entity}/:id` - Remove from favorites
+
+Where `{entity}` is one of: `track`, `album`, `artist`
+
+## Documentation
+
+After starting the app, OpenAPI documentation is available at http://localhost:4000/api/
