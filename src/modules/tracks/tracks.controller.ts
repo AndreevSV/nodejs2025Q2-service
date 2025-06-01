@@ -38,8 +38,6 @@ export class TracksController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updateTrackDto: UpdateTrackDto,
   ) {
-    console.log('🚀 ~ TracksController ~ updateTrackDto:', updateTrackDto);
-
     return this.tracksService.update(id, updateTrackDto);
   }
 

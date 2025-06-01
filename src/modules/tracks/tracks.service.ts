@@ -36,11 +36,8 @@ export class TracksService {
 
   update(id: string, updateTrackDto: UpdateTrackDto): BaseTrackDto {
     const track = this.tracksRepository.findOne(id);
-    console.log('🚀 ~ TracksService ~ update ~ track:', track);
 
     if (!track) {
-      console.log('🚀 ~ TracksService ~ update ~ track: ~error', track);
-
       throw new NotFoundException(`Track with id ${id} not found`);
     }
 
@@ -48,11 +45,7 @@ export class TracksService {
       ...track,
       ...updateTrackDto,
     };
-    console.log('🚀 ~ TracksService ~ update ~ updatedTrack:', updatedTrack);
-
     const result = this.tracksRepository.update(id, updatedTrack);
-    console.log('🚀 ~ TracksService ~ update ~ result:', result);
-
     return result;
   }
 
