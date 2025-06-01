@@ -19,7 +19,7 @@ export class TracksRepository {
   }
 
   update(id: string, updatedTrack: Track) {
-    let index = this.tracks.findIndex((track) => track.id === id);
+    const index = this.tracks.findIndex((track) => track.id === id);
 
     if (index === -1) {
       throw new NotFoundException(`Track with id ${id} not found`);

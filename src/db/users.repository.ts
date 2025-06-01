@@ -19,12 +19,12 @@ export class UsersRepository {
   }
 
   updateUser(id: string, updateData: Partial<User>): User {
-    let index = this.users.findIndex((user) => user.id === id);
+    const index = this.users.findIndex((user) => user.id === id);
 
     if (index === -1) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
-    let user = this.users[index];
+    const user = this.users[index];
 
     const updatedUser = {
       ...user,

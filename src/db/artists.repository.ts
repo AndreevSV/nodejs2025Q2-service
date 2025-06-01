@@ -19,7 +19,7 @@ export class ArtistsRepository {
   }
 
   update(id: string, updatedArtist: Artist) {
-    let index = this.artists.findIndex((artist) => artist.id === id);
+    const index = this.artists.findIndex((artist) => artist.id === id);
 
     if (index === -1) {
       throw new NotFoundException(`Artist with id ${id} not found`);
