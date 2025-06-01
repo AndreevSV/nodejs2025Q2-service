@@ -5,7 +5,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 import { TracksModule } from './modules/tracks/tracks.module';
 import { AlbumsModule } from './modules/albums/albums.module';
-import { FavouritesModule } from './modules/favourites/favourites.module';
+import { FavoritesModule } from './modules/favourites/favorites.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { FavouritesModule } from './modules/favourites/favourites.module';
     ArtistsModule,
     TracksModule,
     AlbumsModule,
-    FavouritesModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
