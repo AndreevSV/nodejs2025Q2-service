@@ -38,6 +38,7 @@ export class UsersService {
     };
 
     const savedUser = this.usersRepository.createUser(user);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userWithoutPassword } = savedUser;
     return userWithoutPassword;
   }
@@ -45,6 +46,7 @@ export class UsersService {
   async getUsers(): Promise<ReturnUserDto[]> {
     const allUsers = this.usersRepository.getUsers();
     const mappedUsers = allUsers.map((user) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: _, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
@@ -59,6 +61,7 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userWithoutPassword } = foundUser;
 
     return userWithoutPassword;
@@ -90,6 +93,7 @@ export class UsersService {
       updatedAt: Date.now(),
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userWithoutPassword } = updatedUser;
 
     return userWithoutPassword;

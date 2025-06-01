@@ -1,13 +1,11 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
   Delete,
-  ParseUUIDPipe,
+  Get,
   HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Post,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
