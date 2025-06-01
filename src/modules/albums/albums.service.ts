@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
+import { AlbumsRepository } from 'src/db/albums.repository';
+import { BaseAlbumDto } from './dto/base-album.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AlbumsService {
-  create(createAlbumDto: CreateAlbumDto) {
-    return 'This action adds a new album';
+  constructor(private readonly albumsRepository: AlbumsRepository) {}
+
+  create(createAlbumDto: CreateAlbumDto): BaseAlbumDto {
+    const albumDto: BaseAlbumDto = {
+      ...createAlbumDto,
+      id: uuidv4(),
+    };
+
+    const album = this.albumsRepository.create(albumDto);
+    return album;
   }
 
-  findAll() {
-    return `This action returns all albums`;
+  findAll(): BaseAlbumDto[] {
+    return this.albumsRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} album`;
+  findOne(id: string): BaseAlbumDto {
+    const album = this.albumsRepository.findOne(id);
+
+    if (!album) {
+      throw new NotFoundException(`Album with id ${id} not found`);
+    }
+
+    return album;
   }
 
-  update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return `This action updates a #${id} album`;
+  update(id: string, updateAlbumDto: UpdateAlbumDto): BaseAlbumDto {
+    const index = this.albumsRepository.findIndexById(id);
+
+    if (index === -1) {
+      throw new NotFoundException(`Album with id ${id} not found`);
+    }
+
+    const album = this.albumsRepository.findOne(id);
+
+    const updatedAlbum = {
+      ...album,
+      ...updateAlbumDto,
+    };
+
+    const result = this.albumsRepository.update(index, updatedAlbum);
+
+    return result;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} album`;
+  remove(id: string): void {
+    const index = this.albumsRepository.findIndexById(id);
+
+    if (index === -1) {
+      throw new NotFoundException(`Album with id ${id} not found`);
+    }
+
+    this.albumsRepository.remove(index);
   }
 }
