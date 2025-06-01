@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { ArtistsRepository } from 'src/db/artists.repository';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseArtistDto } from './dto/base-artist.dto';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 
 @Injectable()
 export class ArtistsService {
-  create(createArtistDto: CreateArtistDto) {
-    return 'This action adds a new artist';
+  constructor(private readonly artistsRepository: ArtistsRepository) {}
+
+  create(createArtistDto: CreateArtistDto): BaseArtistDto {
+    const newArtist: BaseArtistDto = {
+      ...createArtistDto,
+      id: uuidv4(),
+    };
+
+    const result = this.artistsRepository.create(newArtist);
+    return result;
   }
 
-  findAll() {
-    return `This action returns all artists`;
+  findAll(): BaseArtistDto[] {
+    return this.artistsRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} artist`;
+  findOne(id: string) {
+    const foundArtist = this.artistsRepository.findOne(id);
+
+    if (!foundArtist) {
+      throw new NotFoundException(`Artist with id ${id} not found`);
+    }
+
+    return foundArtist;
   }
 
-  update(id: number, updateArtistDto: UpdateArtistDto) {
-    return `This action updates a #${id} artist`;
+  update(id: string, updateArtistDto: UpdateArtistDto): BaseArtistDto {
+    const artist = this.artistsRepository.findOne(id);
+
+    if (!artist) {
+      throw new NotFoundException(`Artist with id ${id} not found`);
+    }
+
+    const updatedArtist = {
+      ...artist,
+      ...updateArtistDto,
+    };
+    const result = this.artistsRepository.update(id, updatedArtist);
+
+    return result;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} artist`;
+  remove(id: string): void {
+    const index = this.artistsRepository.findArtistIndexById(id);
+
+    if (index === -1) {
+      throw new NotFoundException(`Artist with id ${id} not found`);
+    }
+
+    this.artistsRepository.remove(index);
   }
 }
