@@ -4,10 +4,14 @@ import { UpdateAlbumDto } from './dto/update-album.dto';
 import { AlbumsRepository } from 'src/db/albums.repository';
 import { BaseAlbumDto } from './dto/base-album.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { CleanupService } from 'src/common/cleanup/cleanup.service';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private readonly albumsRepository: AlbumsRepository) {}
+  constructor(
+    private readonly albumsRepository: AlbumsRepository,
+    private readonly cleanupService: CleanupService,
+  ) {}
 
   create(createAlbumDto: CreateAlbumDto): BaseAlbumDto {
     const albumDto: BaseAlbumDto = {
@@ -60,5 +64,6 @@ export class AlbumsService {
     }
 
     this.albumsRepository.remove(index);
+    this.cleanupService.removeAlbumFromOtherResources(id);
   }
 }

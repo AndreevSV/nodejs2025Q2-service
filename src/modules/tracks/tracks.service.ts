@@ -1,13 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTrackDto } from './dto/create-track.dto';
-import { UpdateTrackDto } from './dto/update-track.dto';
+import { CleanupService } from 'src/common/cleanup/cleanup.service';
+import { TracksRepository } from 'src/db/tracks.repository';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseTrackDto } from './dto/base-track.dto';
-import { TracksRepository } from 'src/db/tracks.repository';
+import { CreateTrackDto } from './dto/create-track.dto';
+import { UpdateTrackDto } from './dto/update-track.dto';
 
 @Injectable()
 export class TracksService {
-  constructor(private readonly tracksRepository: TracksRepository) {}
+  constructor(
+    private readonly tracksRepository: TracksRepository,
+    private readonly cleanupService: CleanupService,
+  ) {}
 
   create(createTrackDto: CreateTrackDto): BaseTrackDto {
     const track: BaseTrackDto = {
@@ -57,5 +61,7 @@ export class TracksService {
     }
 
     this.tracksRepository.remove(index);
+
+    this.cleanupService.removeTrackFromOtherResources(id);
   }
 }

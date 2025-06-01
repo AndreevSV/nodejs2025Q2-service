@@ -4,10 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { BaseArtistDto } from './dto/base-artist.dto';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
+import { CleanupService } from 'src/common/cleanup/cleanup.service';
 
 @Injectable()
 export class ArtistsService {
-  constructor(private readonly artistsRepository: ArtistsRepository) {}
+  constructor(
+    private readonly artistsRepository: ArtistsRepository,
+    private readonly cleanupService: CleanupService,
+  ) {}
 
   create(createArtistDto: CreateArtistDto): BaseArtistDto {
     const newArtist: BaseArtistDto = {
@@ -57,5 +61,6 @@ export class ArtistsService {
     }
 
     this.artistsRepository.remove(index);
+    this.cleanupService.removeArtistFromOtherResources(id);
   }
 }

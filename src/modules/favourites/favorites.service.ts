@@ -26,13 +26,58 @@ export class FavoritesService {
 
     const favoritesResponseDto: FavoritesResponseDto = {
       artists: artists.length
-        ? artists.map((id) => this.artistsService.findOne(id))
+        ? artists
+            .map((id) => {
+              try {
+                return this.artistsService.findOne(id);
+              } catch (error) {
+                if (error instanceof NotFoundException) {
+                  const index = this.favoritesRepository.findArtistIndex(id);
+                  if (index !== -1) {
+                    this.favoritesRepository.removeArtist(index);
+                  }
+                  return null;
+                }
+                throw error;
+              }
+            })
+            .filter(Boolean)
         : [],
       albums: albums.length
-        ? albums.map((id) => this.albumsService.findOne(id))
+        ? albums
+            .map((id) => {
+              try {
+                return this.albumsService.findOne(id);
+              } catch (error) {
+                if (error instanceof NotFoundException) {
+                  const index = this.favoritesRepository.findAlbumIndex(id);
+                  if (index !== -1) {
+                    this.favoritesRepository.removeAlbum(index);
+                  }
+                  return null;
+                }
+                throw error;
+              }
+            })
+            .filter(Boolean)
         : [],
       tracks: tracks.length
-        ? tracks.map((id) => this.tracksService.findOne(id))
+        ? tracks
+            .map((id) => {
+              try {
+                return this.tracksService.findOne(id);
+              } catch (error) {
+                if (error instanceof NotFoundException) {
+                  const index = this.favoritesRepository.findAlbumIndex(id);
+                  if (index !== -1) {
+                    this.favoritesRepository.removeAlbum(index);
+                  }
+                  return null;
+                }
+                throw error;
+              }
+            })
+            .filter(Boolean)
         : [],
     };
 
