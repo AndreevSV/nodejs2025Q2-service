@@ -27,7 +27,7 @@ export class ArtistsService {
     return this.artistsRepository.findAll();
   }
 
-  findOne(id: string) {
+  findOne(id: string): BaseArtistDto {
     return this.artistsRepository.findOne(id);
   }
 

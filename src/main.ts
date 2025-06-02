@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
+import { writeFileSync } from 'fs';
+import * as YAML from 'yaml';
 
 dotenv.config();
 
@@ -15,8 +17,11 @@ async function bootstrap() {
     .addTag('music')
     .build();
 
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  const document = SwaggerModule.createDocument(app, config);
+
+  writeFileSync('./doc/api.yaml', YAML.stringify(document), 'utf8');
+
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT ?? 4000);
 }
