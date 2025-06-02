@@ -34,7 +34,31 @@ export class TracksRepository {
     this.tracks.splice(index, 1);
   }
 
-  findTrackIndexById(id: string): number {
-    return this.tracks.findIndex((track) => track.id === id);
+  findTrackIndexById(trackId: string): number {
+    return this.tracks.findIndex((track) => track.id === trackId);
+  }
+
+  removeArtistFromTrack(artistId: string) {
+    this.tracks = this.tracks.map((track) => {
+      if (track.artistId === artistId) {
+        return {
+          ...track,
+          artistId: null,
+        };
+      }
+      return track;
+    });
+  }
+
+  removeAlbumFromTrack(albumId: string) {
+    this.tracks = this.tracks.map((track) => {
+      if (track.albumId === albumId) {
+        return {
+          ...track,
+          albumId: null,
+        };
+      }
+      return track;
+    });
   }
 }

@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { FavoritesRepository } from 'src/db/favorites.repository';
 import { FavoritesResponseDto } from './dto/favorites-response.dto';
@@ -88,7 +89,9 @@ export class FavoritesService {
     const track = this.tracksService.findOne(id);
 
     if (!track) {
-      throw new NotFoundException(`Track with id ${id} not found`);
+      throw new UnprocessableEntityException(
+        `Couldn't proceed with unregistered track with id: ${id}`,
+      );
     }
 
     const index = this.favoritesRepository.findTrackIndex(id);
@@ -114,7 +117,9 @@ export class FavoritesService {
     const album = this.albumsService.findOne(id);
 
     if (!album) {
-      throw new NotFoundException(`Album with id ${id} not found`);
+      throw new UnprocessableEntityException(
+        `Couldn't proceed with unregistered album with id: ${id}`,
+      );
     }
 
     const index = this.favoritesRepository.findAlbumIndex(id);
@@ -137,10 +142,12 @@ export class FavoritesService {
   }
 
   addArtist(id: string) {
-    const track = this.artistsService.findOne(id);
+    const artist = this.artistsService.findOne(id);
 
-    if (!track) {
-      throw new NotFoundException(`Artist with id ${id} not found`);
+    if (!artist) {
+      throw new UnprocessableEntityException(
+        `Couldn't proceed with unregistered artist with id: ${id}`,
+      );
     }
 
     const index = this.favoritesRepository.findArtistIndex(id);

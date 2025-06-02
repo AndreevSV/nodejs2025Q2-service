@@ -9,6 +9,7 @@ import {
   Put,
   ParseUUIDPipe,
   ValidationPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { ArtistsService } from './artists.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
@@ -30,7 +31,13 @@ export class ArtistsController {
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.artistsService.findOne(id);
+    const artist = this.artistsService.findOne(id);
+
+    if (!artist) {
+      throw new NotFoundException(`Artist with id ${id} not found`);
+    }
+
+    return artist;
   }
 
   @Put(':id')

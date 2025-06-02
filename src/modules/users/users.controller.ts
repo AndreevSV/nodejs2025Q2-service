@@ -3,12 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   ValidationPipe,
   ParseUUIDPipe,
   HttpCode,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -33,12 +34,18 @@ export class UsersController {
     return this.usersService.getUser(id);
   }
 
-  @Patch(':id')
-  update(
+  @Put(':id')
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updatePasswordDto: UpdatePasswordDto,
   ) {
-    return this.usersService.updatePassword(id, updatePasswordDto);
+    const user = this.usersService.getUser(id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return await this.usersService.updatePassword(id, updatePasswordDto);
   }
 
   @Delete(':id')

@@ -28,13 +28,7 @@ export class ArtistsService {
   }
 
   findOne(id: string) {
-    const foundArtist = this.artistsRepository.findOne(id);
-
-    if (!foundArtist) {
-      throw new NotFoundException(`Artist with id ${id} not found`);
-    }
-
-    return foundArtist;
+    return this.artistsRepository.findOne(id);
   }
 
   update(id: string, updateArtistDto: UpdateArtistDto): BaseArtistDto {

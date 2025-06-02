@@ -29,13 +29,7 @@ export class TracksService {
   }
 
   findOne(id: string): BaseTrackDto {
-    const track = this.tracksRepository.findOne(id);
-
-    if (!track) {
-      throw new NotFoundException(`Track with id ${id} not found`);
-    }
-
-    return track;
+    return this.tracksRepository.findOne(id);
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto): BaseTrackDto {

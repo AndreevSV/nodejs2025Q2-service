@@ -33,4 +33,16 @@ export class AlbumsRepository {
     const index = this.albums.findIndex((album) => album.id === id);
     return index;
   }
+
+  removeArtistFromAlbum(artistId: string) {
+    this.albums = this.albums.map((album) => {
+      if (album.artistId === artistId) {
+        return {
+          ...album,
+          artistId: null,
+        };
+      }
+      return album;
+    });
+  }
 }

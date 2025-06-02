@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Put,
   HttpCode,
+  NotFoundException,
 } from '@nestjs/common';
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -30,7 +31,13 @@ export class TracksController {
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.tracksService.findOne(id);
+    const track = this.tracksService.findOne(id);
+
+    if (!track) {
+      throw new NotFoundException(`Track with id ${id} not found`);
+    }
+
+    return track;
   }
 
   @Put(':id')

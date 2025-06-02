@@ -55,14 +55,14 @@ export class UsersService {
   }
 
   async getUser(id: string): Promise<ReturnUserDto> {
-    const foundUser = this.usersRepository.getUser(id);
+    const user = this.usersRepository.getUser(id);
 
-    if (!foundUser) {
+    if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = foundUser;
+    const { password: _, ...userWithoutPassword } = user;
 
     return userWithoutPassword;
   }
