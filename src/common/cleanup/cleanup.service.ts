@@ -34,6 +34,7 @@ export class CleanupService {
     if (index !== -1) {
       this.favoritesRepository.removeArtist(index);
     }
+
     this.tracksRepository.removeArtistFromTrack(idArtist);
     this.albumsRepository.removeArtistFromAlbum(idArtist);
   }

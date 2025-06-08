@@ -108,6 +108,6 @@ export class AlbumsController {
   })
   @ApiNotFoundResponse({ description: 'Album not found' })
   remove(@Param('id', ParseUUIDPipe) id: string): void {
-    return this.albumsService.remove(id);
+    this.albumsService.remove(id);
   }
 }

@@ -7,9 +7,11 @@ import { TracksModule } from './modules/tracks/tracks.module';
 import { AlbumsModule } from './modules/albums/albums.module';
 import { FavoritesModule } from './modules/favourites/favorites.module';
 import { CleanupModule } from './common/cleanup/cleanup.module';
+import { DbModule } from './db/db.module';
 
 @Module({
   imports: [
+    DbModule,
     UsersModule,
     ArtistsModule,
     TracksModule,
