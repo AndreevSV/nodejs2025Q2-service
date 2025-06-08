@@ -93,7 +93,7 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body(ValidationPipe) updatePasswordDto: UpdatePasswordDto,
   ): Promise<ReturnUserDto> {
-    const user = this.usersService.getUser(id);
+    const user = await this.usersService.getUser(id);
 
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);

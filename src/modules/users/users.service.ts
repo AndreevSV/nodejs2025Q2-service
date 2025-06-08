@@ -28,13 +28,14 @@ export class UsersService {
 
     const hashedPassword = await hashPassword(password);
 
+    const currentDate = Date.now();
     const user: User = {
       id: uuidv4(),
       login,
       password: hashedPassword,
       version: 1,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: currentDate,
+      updatedAt: currentDate,
     };
 
     const savedUser = this.usersRepository.createUser(user);
