@@ -8,9 +8,13 @@ import { AlbumsModule } from './modules/albums/albums.module';
 import { FavoritesModule } from './modules/favourites/favorites.module';
 import { CleanupModule } from './common/cleanup/cleanup.module';
 import { DbModule } from './db/db.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     DbModule,
     UsersModule,
     ArtistsModule,
