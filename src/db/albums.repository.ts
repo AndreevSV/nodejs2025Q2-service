@@ -35,14 +35,10 @@ export class AlbumsRepository {
   }
 
   removeArtistFromAlbum(artistId: string) {
-    this.albums = this.albums.map((album) => {
+    this.albums.forEach((album) => {
       if (album.artistId === artistId) {
-        return {
-          ...album,
-          artistId: null,
-        };
+        album.artistId = null;
       }
-      return album;
     });
   }
 }

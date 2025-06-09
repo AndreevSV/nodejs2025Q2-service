@@ -24,6 +24,6 @@ export class BaseAlbumDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsString()
+  @IsUUID()
   artistId: string | null; // refers to Artist
 }

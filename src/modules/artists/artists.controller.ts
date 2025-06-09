@@ -110,6 +110,6 @@ export class ArtistsController {
   })
   @ApiNotFoundResponse({ description: 'Artist not found' })
   remove(@Param('id', ParseUUIDPipe) id: string): void {
-    return this.artistsService.remove(id);
+    this.artistsService.remove(id);
   }
 }

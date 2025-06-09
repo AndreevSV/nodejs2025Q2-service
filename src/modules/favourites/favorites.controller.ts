@@ -57,7 +57,7 @@ export class FavoritesController {
   })
   @ApiNotFoundResponse({ description: 'Track not found in favorites' })
   removeTrack(@Param('id', ParseUUIDPipe) id: string): void {
-    return this.favoritesService.removeTrack(id);
+    this.favoritesService.removeTrack(id);
   }
 
   @Post('album/:id')
@@ -82,7 +82,7 @@ export class FavoritesController {
   })
   @ApiNotFoundResponse({ description: 'Album not found in favorites' })
   removeAlbum(@Param('id', ParseUUIDPipe) id: string): void {
-    return this.favoritesService.removeAlbum(id);
+    this.favoritesService.removeAlbum(id);
   }
 
   @Post('artist/:id')
@@ -107,6 +107,6 @@ export class FavoritesController {
   })
   @ApiNotFoundResponse({ description: 'Artist not found in favorites' })
   removeArtist(@Param('id', ParseUUIDPipe) id: string): void {
-    return this.favoritesService.removeArtist(id);
+    this.favoritesService.removeArtist(id);
   }
 }

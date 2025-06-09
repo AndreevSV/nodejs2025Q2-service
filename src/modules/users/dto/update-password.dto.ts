@@ -3,13 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdatePasswordDto {
   @ApiProperty()
-  @MinLength(6)
+  @MinLength(4)
   @IsString()
   @IsNotEmpty()
   oldPassword: string; // previous password
 
   @ApiProperty()
-  @MinLength(6)
+  @MinLength(4)
   @IsString()
   @IsNotEmpty()
   newPassword: string; // new password

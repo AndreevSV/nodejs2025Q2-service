@@ -39,26 +39,18 @@ export class TracksRepository {
   }
 
   removeArtistFromTrack(artistId: string) {
-    this.tracks = this.tracks.map((track) => {
+    this.tracks.forEach((track) => {
       if (track.artistId === artistId) {
-        return {
-          ...track,
-          artistId: null,
-        };
+        track.artistId = null;
       }
-      return track;
     });
   }
 
   removeAlbumFromTrack(albumId: string) {
-    this.tracks = this.tracks.map((track) => {
+    this.tracks.forEach((track) => {
       if (track.albumId === albumId) {
-        return {
-          ...track,
-          albumId: null,
-        };
+        track.albumId = null;
       }
-      return track;
     });
   }
 }
